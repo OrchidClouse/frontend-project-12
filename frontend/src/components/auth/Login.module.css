@@ -1,0 +1,23 @@
+.formContainer{
+	display: flex;
+	width: 15%;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+	justify-content: center;
+	border: 2px solid wheat;
+	padding: 2rem;
+}
+
+.submitBtn{
+	width: 10rem;
+	margin-top: 10px;
+	border: none;
+	outline: none;
+}
+
+.submitBtn:hover{
+	cursor: pointer;
+	transition: all 0.5s ease;
+	scale: 1.1;
+}
