@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
 import {Routes, Route} from 'react-router-dom';
-import { LoginPage } from './components/auth/Login';
+import { LoginPage } from './components/auth/LoginPage';
 
 function App() {
   return (
