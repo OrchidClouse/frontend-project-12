@@ -3,12 +3,8 @@ import {useFormik} from 'formik';
 import styles from "./Login.module.css";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
-import { useDispatch } from 'react-redux';
-import { setCredentials } from '../../store/authSlice';
 
-export const LoginPage = () => {
-	const dispatch = useDispatch();
+export const SignupPage = () => {
 
 	const navigate = useNavigate();
 
@@ -16,17 +12,19 @@ export const LoginPage = () => {
 		initialValues: {
 			login: '',
 			password: '',
+			repeatPassword: '',
 		},
 		onSubmit: values => {
-			try{
-				axios.post('/api/v1/login', { username: values.login, password: values.password }).then((response) => {
+			if(values.password === values.repeatPassword){
+				axios.post('/api/v1/signup', { username: values.login, password: values.password }).then((response) => {
 					console.log(response.data);
-					dispatch(setCredentials(response.data));
-					navigate('/')
-				});
-			}catch(error){
-				console.log(error);
+					localStorage.setItem('token', response.data.token);
+					navigate('/');
+				})
+			}else{
+				console.error('Not same passwords');
 			}
+
 		},
 	});
 
@@ -50,11 +48,16 @@ export const LoginPage = () => {
 				value={formik.values.password}
 			/>
 
-			<div>
-				If u not registred <u><a href="/signup">click here</a></u>
-			</div>
+			<label htmlFor="repeatPassword">Password</label>
+			<input
+				id="repeatPassword"
+				name="repeatPassword"
+				type="password"
+				onChange={formik.handleChange}
+				value={formik.values.repeatPassword}
+			/>
 
-			<Button className={styles.submitBtn} type="submit">Submit</Button>
+			<button className={styles.submitBtn} type="submit">Submit</button>
 		</form>
 	)
 }
